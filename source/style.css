@@ -68,22 +68,29 @@ nav {
 }
 
 #artContainer {
-    display: flex;
-    flex-wrap: wrap;
-    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Адаптивные колонки */
+    grid-gap: 15px; /* Отступ между изображениями */
+    padding: 15px;
 }
 
 .art-item {
-    width: 100px;
-    margin: 10px;
-    text-align: center;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
 }
 
 .art-item img {
     width: 100%;
-    border-radius: 5px;
+    height: auto;
+    display: block;
+    transition: transform 0.3s ease;
 }
 
+.art-item:hover img {
+    transform: scale(1.1); /* Эффект увеличения при наведении */
+}
 .telegram-button:hover {
     background-color: var(--button-hover-background);
 }
