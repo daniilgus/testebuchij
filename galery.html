@@ -27,7 +27,6 @@
     </footer>
 
     <script>
-        // Функция для загрузки изображений с PostImage через прокси и регулярные выражения
         async function loadImages() {
             try {
                 const galleryUrl = 'https://postimg.cc/gallery/Qr7K3Sc'; // Твоя ссылка
@@ -35,7 +34,7 @@
                 const response = await fetch(proxyUrl);
                 const { contents } = await response.json();
 
-                // Уточненное регулярное выражение для поиска оригинальных изображений
+                // Уточненное регулярное выражение для поиска только прямых ссылок
                 const imageRegex = /https?:\/\/i\.postimg\.cc\/[a-zA-Z0-9]+(\.jpg|\.jpeg|\.png|\.gif)/g;
                 const matches = contents.match(imageRegex);
 
