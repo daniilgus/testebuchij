@@ -29,44 +29,36 @@
     <script>
         async function loadImages() {
             try {
-                // Настройки для API freeimage.host
-                const albumId = 'OsHI2'; // ID твоего альбома
-                const apiKey = '6d207e02198a847aa98d0a2a901485a5'; // Твой API-ключ
-                const password = 'dimannigga'; // Пароль для приватного альбома
+                const galleryUrl = 'https://postimg.cc/gallery/Qr7K3Sc'; // Твоя ссылка на галерею
+                const proxyUrl = 'https://api.allorigins.win/get?url=' + encodeURIComponent(galleryUrl);
 
-                // URL для получения информации об альбоме
-                const apiUrl = `https://api.freeimage.host/v1/albums/${albumId}?key=${apiKey}&password=${password}`;
+                const response = await fetch(proxyUrl);
+                const { contents } = await response.json();
 
-                // Отправляем запрос к API
-                const response = await fetch(apiUrl);
-                if (!response.ok) {
-                    throw new Error(`Ошибка при запросе к API: ${response.statusText}`);
-                }
+                // Регулярное выражение для поиска прямых ссылок
+                const imageRegex = /https?:\/\/i\.postimg\.cc\/[a-zA-Z0-9]+(\.jpg|\.jpeg|\.png|\.gif)/g;
+                const matches = contents.match(imageRegex);
 
-                const data = await response.json();
-
-                if (!data.success) {
-                    console.error('Ошибка при загрузке данных:', data.message || 'Неизвестная ошибка');
+                if (!matches || matches.length === 0) {
+                    console.warn('Изображения не найдены.');
                     return;
                 }
 
-                // Извлекаем ссылки на изображения
-                const images = data.data.images.map(image => image.url);
+                // Удаление дубликатов
+                const uniqueImages = Array.from(new Set(matches));
 
-                // Добавляем изображения в контейнер
                 const artContainer = document.getElementById('artContainer');
-                images.forEach(imageSrc => {
+                uniqueImages.forEach(imageSrc => {
                     const imgElement = document.createElement('div');
                     imgElement.classList.add('art-item');
                     imgElement.innerHTML = `<img src="${imageSrc}" alt="Art">`;
                     artContainer.appendChild(imgElement);
                 });
             } catch (error) {
-                console.error('Ошибка при загрузке изображений:', error.message);
+                console.error('Ошибка при загрузке изображений:', error);
             }
         }
 
-        // Вызываем функцию при загрузке страницы
         window.onload = loadImages;
     </script>
 </body>
