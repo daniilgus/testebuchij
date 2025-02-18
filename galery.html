@@ -27,20 +27,12 @@
     </footer>
 
     <script>
-        // Функция для загрузки изображений с PostImage через прокси и регулярные выражения
-        async function loadImages() {
+       async function loadImages() {
             try {
-                // URL галереи на PostImage
-                const galleryUrl = 'https://postimg.cc/gallery/c6sZsKd'; // Твоя ссылка
-
-                // Используем прокси-сервер для обхода CORS
+                const galleryUrl = 'https://postimg.cc/gallery/Qr7K3Sc';
                 const proxyUrl = 'https://api.allorigins.win/get?url=' + encodeURIComponent(galleryUrl);
-
-                // Получаем HTML-код страницы галереи через прокси
                 const response = await fetch(proxyUrl);
                 const { contents } = await response.json();
-
-                // Ищем все ссылки на изображения с помощью регулярного выражения
                 const imageRegex = /https?:\/\/i\.postimg\.cc\/[^\s"'<>]+/g;
                 const matches = contents.match(imageRegex);
 
@@ -49,14 +41,20 @@
                     return;
                 }
 
-                // Добавляем изображения в контейнер
+                const uniqueImages = new Set(matches);
                 const artContainer = document.getElementById('artContainer');
-                matches.forEach(imageSrc => {
+
+                uniqueImages.forEach(imageSrc => {
+                    const originalSrc = imageSrc.includes('?') 
+                        ? `${imageSrc}&original` 
+                        : `${imageSrc}?original`;
+
                     const imgElement = document.createElement('img');
-                    imgElement.src = imageSrc;
+                    imgElement.src = originalSrc;
                     imgElement.classList.add('img-fluid', 'art-item');
                     imgElement.style.margin = '10px';
                     imgElement.style.width = '100%';
+                    imgElement.setAttribute('loading', 'lazy');
                     artContainer.appendChild(imgElement);
                 });
             } catch (error) {
@@ -64,7 +62,6 @@
             }
         }
 
-        // Вызываем функцию при загрузке страницы
         window.onload = loadImages;
     </script>
 </body>
