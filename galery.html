@@ -46,8 +46,18 @@ async function loadImages() {
             return;
         }
 
+        // Удаляем лишние символы перед JSON
+        let rawContents = proxyResponse.contents;
+        const jsonStartIndex = rawContents.indexOf('{'); // Находим начало JSON
+        if (jsonStartIndex !== -1) {
+            rawContents = rawContents.substring(jsonStartIndex); // Обрезаем строку до начала JSON
+        } else {
+            console.error('Не удалось найти начало JSON.');
+            return;
+        }
+
         // Парсим содержимое как JSON
-        const data = JSON.parse(proxyResponse.contents);
+        const data = JSON.parse(rawContents);
 
         if (!data.success || !data.data || data.data.length === 0) {
             console.warn('Изображения не найдены.');
