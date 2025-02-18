@@ -74,6 +74,30 @@ nav {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
+.masonry-grid {
+    column-gap: 15px;
+    margin: 15px;
+}
+
+.masonry-grid .art-item {
+    margin-bottom: 15px;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+.masonry-grid .art-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.masonry-grid .art-item:hover img {
+    transform: scale(1.1);
+}
+
 .telegram-button {
     background-color: var(--button-background);
     color: #fff;
