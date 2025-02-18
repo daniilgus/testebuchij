@@ -17,42 +17,41 @@
             <a href="https://telegram.me/your_bot" class="telegram-button">Войти через Telegram</a>
         </nav>
     </header>
-
     <div class="user_container">
         <div id="artContainer">
-            <!--Тут будут арты-->
+            <!-- Тут будут арты -->
         </div>
     </div>
-
     <footer>
         <p>© 2025 NeurochanArt. Все права защищены. "Возможно"</p>
     </footer>
 
     <script>
-        // Функция для загрузки изображений с PostImage через прокси
+        // Функция для загрузки изображений с PostImage через прокси и регулярные выражения
         async function loadImages() {
             try {
                 // URL галереи на PostImage
                 const galleryUrl = 'https://postimg.cc/gallery/Qr7K3Sc'; // Твоя ссылка
-    
+
                 // Используем прокси-сервер для обхода CORS
                 const proxyUrl = 'https://api.allorigins.win/get?url=' + encodeURIComponent(galleryUrl);
-    
+
                 // Получаем HTML-код страницы галереи через прокси
                 const response = await fetch(proxyUrl);
                 const { contents } = await response.json();
-    
-                // Создаем временный элемент для парсинга HTML
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(contents, 'text/html');
-    
-                // Находим все изображения в галерее
-                const images = Array.from(doc.querySelectorAll('.gallery-item img'))
-                    .map(img => img.src);
-    
+
+                // Ищем все ссылки на изображения с помощью регулярного выражения
+                const imageRegex = /https?:\/\/i\.postimg\.cc\/[^\s"'<>]+/g;
+                const matches = contents.match(imageRegex);
+
+                if (!matches || matches.length === 0) {
+                    console.warn('Изображения не найдены.');
+                    return;
+                }
+
                 // Добавляем изображения в контейнер
                 const artContainer = document.getElementById('artContainer');
-                images.forEach(imageSrc => {
+                matches.forEach(imageSrc => {
                     const imgElement = document.createElement('img');
                     imgElement.src = imageSrc;
                     imgElement.classList.add('img-fluid', 'art-item');
@@ -64,7 +63,7 @@
                 console.error('Ошибка при загрузке изображений:', error);
             }
         }
-    
+
         // Вызываем функцию при загрузке страницы
         window.onload = loadImages;
     </script>
