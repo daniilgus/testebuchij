@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NeurochanArt</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
-    <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
     <link rel="stylesheet" href="source/style.css" />
 </head>
 <body>
@@ -19,7 +18,7 @@
         </nav>
     </header>
     <div class="user_container">
-        <div id="artContainer" class="masonry-grid">
+        <div id="artContainer">
             <!-- Тут будут арты -->
         </div>
     </div>
@@ -31,11 +30,17 @@
         // Функция для загрузки изображений с PostImage через прокси и регулярные выражения
         async function loadImages() {
             try {
-                const galleryUrl = 'https://postimg.cc/gallery/Qr7K3Sc';
+                // URL галереи на PostImage
+                const galleryUrl = 'https://postimg.cc/gallery/Qr7K3Sc'; // Твоя ссылка
+
+                // Используем прокси-сервер для обхода CORS
                 const proxyUrl = 'https://api.allorigins.win/get?url=' + encodeURIComponent(galleryUrl);
+
+                // Получаем HTML-код страницы галереи через прокси
                 const response = await fetch(proxyUrl);
                 const { contents } = await response.json();
 
+                // Ищем все ссылки на изображения с помощью регулярного выражения
                 const imageRegex = /https?:\/\/i\.postimg\.cc\/[^\s"'<>]+/g;
                 const matches = contents.match(imageRegex);
 
@@ -44,29 +49,23 @@
                     return;
                 }
 
+                // Добавляем изображения в контейнер
                 const artContainer = document.getElementById('artContainer');
                 matches.forEach(imageSrc => {
-                    const imgElement = document.createElement('div');
-                    imgElement.classList.add('art-item');
-                    imgElement.innerHTML = `<img src="${imageSrc}" alt="Art">`;
+                    const imgElement = document.createElement('img');
+                    imgElement.src = imageSrc;
+                    imgElement.classList.add('img-fluid', 'art-item');
+                    imgElement.style.margin = '10px';
+                    imgElement.style.width = '100%';
                     artContainer.appendChild(imgElement);
-                });
-
-                // Инициализация Masonry
-                new Masonry(artContainer, {
-                    itemSelector: '.art-item',
-                    columnWidth: '.art-item',
-                    gutter: 15,
-                    fitWidth: true
                 });
             } catch (error) {
                 console.error('Ошибка при загрузке изображений:', error);
             }
         }
 
+        // Вызываем функцию при загрузке страницы
         window.onload = loadImages;
-
-
     </script>
 </body>
 </html>
