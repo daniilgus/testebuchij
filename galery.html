@@ -27,60 +27,46 @@
     </footer>
     <script>
         // Функция для загрузки изображений с Imgur
-async function loadImages() {
-    try {
-        // ID альбома Imgur (из URL альбома)
-        const albumId = '0aG3suY'; // Замените на ваш albumID (например, "abcd1234")
-        const imgurApiUrl = `https://api.imgur.com/3/album/${albumId}/images`;
+        async function loadImages() {
+            try {
+                const albumId = '0aG3suY'; // Замените на ваш ID альбома
+                const imgurApiUrl = `https://api.imgur.com/3/album/${albumId}/images`;
 
-        // Используем прокси-сервер для обхода CORS
-        const proxyUrl = 'https://api.allorigins.win/get?url=' + encodeURIComponent(imgurApiUrl);
+                // Делаем запрос напрямую к API Imgur
+                const response = await fetch(imgurApiUrl, {
+                    headers: {
+                        Authorization: 'ecbc89da3211231' // Замените YOUR_CLIENT_ID на ваш Client-ID
+                    }
+                });
 
-        // Делаем запрос к API Imgur через прокси
-        const response = await fetch(proxyUrl);
-        const proxyResponse = await response.json();
+                if (!response.ok) {
+                    console.error('Ошибка при получении данных:', response.statusText);
+                    return;
+                }
 
-        // Проверяем, что содержимое существует
-        if (!proxyResponse.contents) {
-            console.error('Содержимое отсутствует.');
-            return;
+                const data = await response.json();
+
+                if (!data.success || !data.data || data.data.length === 0) {
+                    console.warn('Изображения не найдены.');
+                    return;
+                }
+
+                // Добавляем изображения в контейнер
+                const artContainer = document.getElementById('artContainer');
+                data.data.forEach(image => {
+                    const imgElement = document.createElement('img');
+                    imgElement.src = image.link; // Прямая ссылка на изображение
+                    imgElement.classList.add('img-fluid', 'art-item');
+                    imgElement.style.margin = '10px';
+                    imgElement.style.width = '100%';
+                    imgElement.setAttribute('loading', 'lazy'); // Ленивая загрузка
+                    artContainer.appendChild(imgElement);
+                });
+            } catch (error) {
+                console.error('Ошибка при загрузке изображений:', error);
+            }
         }
 
-        // Удаляем лишние символы перед JSON
-        let rawContents = proxyResponse.contents;
-        const jsonStartIndex = rawContents.indexOf('{'); // Находим начало JSON
-        if (jsonStartIndex !== -1) {
-            rawContents = rawContents.substring(jsonStartIndex); // Обрезаем строку до начала JSON
-        } else {
-            console.error('Не удалось найти начало JSON.');
-            return;
-        }
-
-        // Парсим содержимое как JSON
-        const data = JSON.parse(rawContents);
-
-        if (!data.success || !data.data || data.data.length === 0) {
-            console.warn('Изображения не найдены.');
-            return;
-        }
-
-        // Добавляем изображения в контейнер
-        const artContainer = document.getElementById('artContainer');
-        data.data.forEach(image => {
-            const imgElement = document.createElement('img');
-            imgElement.src = image.link; // Прямая ссылка на изображение
-            imgElement.classList.add('img-fluid', 'art-item');
-            imgElement.style.margin = '10px';
-            imgElement.style.width = '100%';
-            imgElement.setAttribute('loading', 'lazy'); // Ленивая загрузка
-            artContainer.appendChild(imgElement);
-        });
-    } catch (error) {
-        console.error('Ошибка при загрузке изображений:', error);
-    }
-}
-
-// Вызываем функцию при загрузке страницы
 window.onload = loadImages;
     </script>
 </body>
