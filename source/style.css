@@ -1,0 +1,237 @@
+:root {
+    --background-color: #121212;
+    --container-background: #1e1e1e;
+    --header-color: #fff;
+    --list-item-background: #2a2a2a;
+    --list-item-hover-background: #3a3a3a;
+    --input-background: #333;
+    --button-background: #0071f1;
+    --button-hover-background: #005bb5;
+    --scrollbar-thumb: #0071f1;
+    --scrollbar-thumb-hover: #005bb5;
+    --border-color: #444;
+    --text-color: #ffffff;
+    --modal-background: #2e2e2e;
+    --shadow-color: rgb(0 13 255);
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.header {
+    background-color: var(--container-background);
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 8px var(--shadow-color);
+}
+
+.header h1 {
+    font-family: 'Georgia', serif;
+    color: var(--header-color);
+    cursor: pointer;
+    margin: 0;
+}
+
+nav {
+    margin-top: 0;
+}
+
+.nav-link {
+    color: var(--header-color);
+    text-decoration: none;
+    margin: 0 15px;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: var(--button-background);
+}
+
+.telegram-button {
+    background-color: var(--button-background);
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    margin-left: 20px;
+}
+
+.telegram-button:hover {
+    background-color: var(--button-hover-background);
+}
+
+.user_container {
+    background: var(--container-background);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 10px var(--shadow-color);
+    margin: auto;
+    width: 90%;
+    max-width: 1200px;
+    line-height: 1.8;
+    font-weight: 600;
+}
+
+.content-section {
+    padding: 20px;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.col-md-12,
+.col-lg-6 {
+    flex: 0 0 100%;
+    max-width: 100%;
+}
+
+@media (min-width: 768px) {
+    .col-lg-6 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+}
+
+.img-fluid {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-top: auto; /* Прижимаем к низу блока */
+    display: block; /* Убедимся, что изображение блоковое */
+}
+
+.btn {
+    background-color: var(--button-background);
+    color: #ffffff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: var(--button-hover-background);
+}
+
+footer {
+    background-color: var(--container-background);
+    text-align: center;
+    margin-top: auto;
+    box-shadow: 0 -4px 8px var(--shadow-color);
+}
+
+/* Улучшение стилей текста */
+h2 {
+    font-size: 2em;
+    margin-bottom: 15px;
+    color: #0071f1;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+}
+
+.description {
+    font-weight: bold; /* Делаем текст описания жирным */
+    line-height: 1.6; /* Увеличиваем межстрочный интервал */
+    margin-bottom: 20px; /* Отступ снизу */
+}
+
+ul {
+    padding-left: 20px;
+    margin-bottom: 20px;
+}
+
+li {
+    margin-bottom: 10px;
+    position: relative;
+}
+
+li:before {
+    content: "✔️";
+    position: absolute;
+    left: -20px;
+    top: 0;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.modal-content {
+    background-color: var(--modal-background);
+    margin: 15% auto;
+    padding: 20px;
+    border-radius: 15px;
+    width: 40%; /* Уменьшаем ширину модального окна */
+    display: flex;
+    box-shadow: 0 4px 20px var(--shadow-color); /* Тень для модального окна */
+}
+
+.modal-content img {
+    max-width: 50%;
+    border-radius: 10px;
+    margin-right: 20px;
+    margin-left: 10px;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    margin-left: 20px;
+}
+
+.close:hover,
+.close:focus {
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.art-item:hover {
+    cursor: pointer;
+}
+
+.modal-content p {
+    margin: 0;
+    padding: 10px; 
+    white-space: pre-wrap; 
+}
+
+@media (min-width: 768px) {
+    .header h1 {
+        font-size: 2em;
+    }
+}
+
+@media (max-width: 768px) {
+    #artContainer {
+        column-count: 2;
+    }
+}
+
+@media (max-width: 480px) {
+    #artContainer {
+        column-count: 1;
+    }
+}

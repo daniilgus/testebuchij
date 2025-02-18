@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="source/style.css">
+    <title>NeurochanArt</title>
+</head>
+<body>
+
+<header class="header">
+    <h1 onclick="window.location.href='index.html'">NeurochanArt</h1>
+    <nav>
+        <a href="index.html" class="nav-link">Главная</a>
+        <a href="token.html" class="nav-link">Токены</a>
+        <a href="galery.html" class="nav-link">Галерея</a>
+        <div id="telegram-login-button">
+            <script async src="https://telegram.org/js/telegram-widget.js?2" 
+                data-telegram-login="neurochanreg_bot" 
+                data-size="medium" 
+                data-auth-url="check_authorization.php" 
+                data-request-access="write"
+                data-onauth="handleAuthResult(user)"></script>
+        </div>
+    </nav>
+</header>
+
+<main class="user_container">
+    <section class="content-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-12 col-lg-6 order-lg-2">
+                    <h2>Neurochan - Аниме бот</h2>
+                    <p>Neurochan - это бот, который создаёт потрясающие аниме арты по твоему описанию!</p>
+                    <br />
+                </div>
+                <div class="col-md-12 col-lg-6 order-lg-1">
+                    <img src="img/img2.png" alt="Картинка" class="img-fluid" />
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <p>© 2025 NeurochanArt. Все права защищены. "Возможно"</p>
+</footer>
+
+<script>
+function handleAuthResult(user) {
+    console.log(user); // Для отладки
+    if (user) {
+        // Перенаправляем на страницу авторизации
+        window.location.href = "check_authorization.php?" + new URLSearchParams(user);
+    } else {
+        console.error('Пользователь не авторизован');
+    }
+}
+</script>
+
+</body>
+</html>

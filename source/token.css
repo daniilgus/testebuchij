@@ -1,0 +1,287 @@
+:root {
+  --background-color: #121212;
+  --container-background: #1e1e1e;
+  --header-color: #fff;
+  --list-item-background: #2a2a2a;
+  --list-item-hover-background: #3a3a3a;
+  --input-background: #333;
+  --button-background: #0071f1;
+  --button-hover-background: #005bb5;
+  --scrollbar-thumb: #0071f1;
+  --scrollbar-thumb-hover: #005bb5;
+  --border-color: #444;
+  --text-color: #ffffff;
+  --modal-background: #2e2e2e;
+  --shadow-color: rgb(0 13 255);
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.header {
+  background-color: var(--container-background);
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 8px var(--shadow-color);
+}
+
+.header h1 {
+  font-family: 'Georgia', serif;
+  color: var(--header-color);
+  cursor: pointer;
+  margin: 0;
+}
+
+nav {
+  margin-top: 0;
+}
+
+.btn
+{
+  cursor: pointer;
+}
+
+.nav-link {
+  color: var(--header-color);
+  text-decoration: none;
+  margin: 0 15px;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: var(--button-background);
+}
+
+.telegram-button {
+  background-color: var(--button-background);
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+  margin-left: 20px;
+}
+
+.telegram-button:hover {
+  background-color: var(--button-hover-background);
+}
+
+.user_container {
+  background: var(--container-background);
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 8px 10px var(--shadow-color);
+  margin: auto;
+  width: 90%;
+  max-width: 1200px;
+  line-height: 1.8;
+  font-weight: 600;
+}
+  
+/* Убедитесь, что кнопки выстраиваются в два столбика */
+.token-buttons {
+  display: flex;
+  flex-wrap: wrap; /* Позволяет элементам переноситься на следующую строку */
+  justify-content: space-between; /* Распределяет пространство между элементами */
+}
+
+.token-buttons .btn {
+  flex: 0 0 48%; /* Устанавливает ширину кнопок на 48% */
+  margin-bottom: 10px; /* Отступ между кнопками */
+}
+
+  
+  .text-center {
+    text-align: center;
+  }
+
+  .btn-outline-light {
+    background-color: transparent;
+    color: white;
+    border: 2px solid white;
+    padding: 8px 16px; 
+    border-radius: 5px;
+    margin-bottom: 10px;
+    transition: background-color 0.3s ease;
+  }
+
+  .btn-outline-light:hover {
+    background-color: white;
+    color: #181818; 
+  }
+
+  .w-100 {
+    width: 100%;
+  }
+  
+  .content-section .container {
+    max-width: 95%;
+    margin: 0 auto;
+    color: #fff;
+  }
+  
+  .content-section .row {
+    display: flex;
+  }
+  
+  .content-section .col-md-6 {
+    padding: 0;
+    margin: 0.5%;
+  }
+  
+  .content-section img {
+    width: 45%;
+    height: auto;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    bottom: 0;
+    position: absolute;
+  }
+  
+  .content-section h2 {
+    margin-bottom: 0.66rem;
+    font-size: 20px; 
+  }
+  
+  .content-section p {
+    margin-bottom: 0;
+    font-size: 18px;
+  }
+  
+  .nav-link {
+    color: #fff;
+  }
+  
+  .nav-link:hover {
+    color: #0003be;
+  }
+  
+  .navbar-toggler {
+    right: 2%;
+    position: absolute;
+  }
+ 
+
+  footer {
+    background-color: var(--container-background);
+    text-align: center;
+    margin-top: auto;
+    box-shadow: 0 -4px 8px var(--shadow-color);
+}
+
+  
+  @media screen and (min-width: 320px) and (max-width: 600px) {
+    .content-section img {
+      display: none;
+    }
+    
+    .logo {
+      width: 22.5%;
+    }
+  
+    body {
+      overflow: scroll;
+    }
+  
+    p.by-gus {
+      font-size: 4px; 
+    }
+  }
+  
+  @media (max-width: 768px) {
+      
+    body {
+      overflow: scroll;
+    }
+  
+    .content-section img {
+      display: none;
+    }
+  
+    p.by-gus {
+      font-size: 4px; 
+    }
+  
+    .nav-link {
+      color: #fff;
+      text-decoration: none;
+    }
+  
+    .nav-link:hover {
+      color: #0003be;
+      text-decoration: none;
+    }
+  
+    .nav-link:focus {
+      outline: none;
+      text-decoration: none;
+    }
+  
+    .nav-link:active {
+      outline: none;
+      text-decoration: none;
+    }
+  
+    .header-bg .container {
+      max-width: 100%;
+    }
+  
+    .header-bg .navbar-collapse {
+      flex-direction: column;
+    }
+  
+    .header-bg .navbar-nav {
+      flex-direction: column;
+    }
+  
+    .content-section .row {
+      flex-direction: column;
+    }
+  
+    .content-section .col-md-6 {
+      margin: 0.66rem 0; 
+    }
+  
+    div.col-md-12.col-lg-6.order-lg-2 {
+      text-align: center;
+    }
+  
+    .content-section img {
+      width: 50%;
+      margin: 0.66rem 0;
+    }
+  
+    .content-section h2 {
+      font-size: 16px;
+    }
+  
+    .content-section p {
+      font-size: 12px; 
+    }
+  
+    .content-section .btn {
+      margin-top: 0.66rem; 
+    }
+  
+    footer .nav {
+      flex-direction: column;
+    }
+
+      .footer-content-section .container {
+    max-width: 100%;
+  }
+
+  .footer-content-section .footer-nav {
+    flex-direction: column;
+  }
+  }
