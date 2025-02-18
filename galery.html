@@ -29,19 +29,22 @@
     </footer>
 
     <script>
-        // Функция для загрузки изображений с PostImage
+        // Функция для загрузки изображений с PostImage через прокси
         async function loadImages() {
             try {
                 // URL галереи на PostImage
                 const galleryUrl = 'https://postimg.cc/gallery/Qr7K3Sc'; // Твоя ссылка
     
-                // Получаем HTML-код страницы галереи
-                const response = await fetch(galleryUrl);
-                const html = await response.text();
+                // Используем прокси-сервер для обхода CORS
+                const proxyUrl = 'https://api.allorigins.win/get?url=' + encodeURIComponent(galleryUrl);
+    
+                // Получаем HTML-код страницы галереи через прокси
+                const response = await fetch(proxyUrl);
+                const { contents } = await response.json();
     
                 // Создаем временный элемент для парсинга HTML
                 const parser = new DOMParser();
-                const doc = parser.parseFromString(html, 'text/html');
+                const doc = parser.parseFromString(contents, 'text/html');
     
                 // Находим все изображения в галерее
                 const images = Array.from(doc.querySelectorAll('.gallery-item img'))
