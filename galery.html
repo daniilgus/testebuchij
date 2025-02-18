@@ -25,36 +25,36 @@
     <footer>
         <p>© 2025 NeurochanArt. Все права защищены. "Возможно"</p>
     </footer>
-
     <script>
-       async function loadImages() {
+        // Функция для загрузки изображений с Imgur
+        async function loadImages() {
             try {
-                const galleryUrl = 'https://postimg.cc/gallery/Qr7K3Sc';
-                const proxyUrl = 'https://api.allorigins.win/get?url=' + encodeURIComponent(galleryUrl);
+                // ID альбома Imgur (из URL альбома) 
+                const albumId = '0aG3suY'; 
+                const imgurApiUrl = `https://api.imgur.com/3/album/${albumId}/images`;
+
+                // Используем прокси-сервер для обхода CORS
+                const proxyUrl = 'https://api.allorigins.win/get?url=' + encodeURIComponent(imgurApiUrl);
+
+                // Делаем запрос к API Imgur через прокси
                 const response = await fetch(proxyUrl);
                 const { contents } = await response.json();
-                const imageRegex = /https?:\/\/i\.postimg\.cc\/[^\s"'<>]+/g;
-                const matches = contents.match(imageRegex);
+                const data = JSON.parse(contents);
 
-                if (!matches || matches.length === 0) {
+                if (!data.success || !data.data || data.data.length === 0) {
                     console.warn('Изображения не найдены.');
                     return;
                 }
 
-                const uniqueImages = new Set(matches);
+                // Добавляем изображения в контейнер
                 const artContainer = document.getElementById('artContainer');
-
-                uniqueImages.forEach(imageSrc => {
-                    const originalSrc = imageSrc.includes('?') 
-                        ? `${imageSrc}&original` 
-                        : `${imageSrc}?original`;
-
+                data.data.forEach(image => {
                     const imgElement = document.createElement('img');
-                    imgElement.src = originalSrc;
+                    imgElement.src = image.link; // Прямая ссылка на изображение
                     imgElement.classList.add('img-fluid', 'art-item');
                     imgElement.style.margin = '10px';
                     imgElement.style.width = '100%';
-                    imgElement.setAttribute('loading', 'lazy');
+                    imgElement.setAttribute('loading', 'lazy'); // Ленивая загрузка
                     artContainer.appendChild(imgElement);
                 });
             } catch (error) {
@@ -62,6 +62,7 @@
             }
         }
 
+        // Вызываем функцию при загрузке страницы
         window.onload = loadImages;
     </script>
 </body>
