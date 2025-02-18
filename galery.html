@@ -27,16 +27,21 @@
     </footer>
 
     <script>
+        // Функция для загрузки изображений с PostImage через прокси и регулярные выражения
         async function loadImages() {
             try {
-                const galleryUrl = 'https://postimg.cc/gallery/Qr7K3Sc'; // Твоя ссылка на галерею
+                // URL галереи на PostImage
+                const galleryUrl = 'https://postimg.cc/gallery/Qr7K3Sc'; // Твоя ссылка
+
+                // Используем прокси-сервер для обхода CORS
                 const proxyUrl = 'https://api.allorigins.win/get?url=' + encodeURIComponent(galleryUrl);
 
+                // Получаем HTML-код страницы галереи через прокси
                 const response = await fetch(proxyUrl);
                 const { contents } = await response.json();
 
-                // Регулярное выражение для поиска прямых ссылок
-                const imageRegex = /https?:\/\/i\.postimg\.cc\/[a-zA-Z0-9]+(\.jpg|\.jpeg|\.png|\.gif)/g;
+                // Ищем все ссылки на изображения с помощью регулярного выражения
+                const imageRegex = /https?:\/\/i\.postimg\.cc\/[^\s"'<>]+/g;
                 const matches = contents.match(imageRegex);
 
                 if (!matches || matches.length === 0) {
@@ -44,14 +49,14 @@
                     return;
                 }
 
-                // Удаление дубликатов
-                const uniqueImages = Array.from(new Set(matches));
-
+                // Добавляем изображения в контейнер
                 const artContainer = document.getElementById('artContainer');
-                uniqueImages.forEach(imageSrc => {
-                    const imgElement = document.createElement('div');
-                    imgElement.classList.add('art-item');
-                    imgElement.innerHTML = `<img src="${imageSrc}" alt="Art">`;
+                matches.forEach(imageSrc => {
+                    const imgElement = document.createElement('img');
+                    imgElement.src = imageSrc;
+                    imgElement.classList.add('img-fluid', 'art-item');
+                    imgElement.style.margin = '10px';
+                    imgElement.style.width = '100%';
                     artContainer.appendChild(imgElement);
                 });
             } catch (error) {
@@ -59,6 +64,7 @@
             }
         }
 
+        // Вызываем функцию при загрузке страницы
         window.onload = loadImages;
     </script>
 </body>
