@@ -39,10 +39,14 @@
 
                 // Отправляем запрос к API
                 const response = await fetch(apiUrl);
+                if (!response.ok) {
+                    throw new Error(`Ошибка при запросе к API: ${response.statusText}`);
+                }
+
                 const data = await response.json();
 
                 if (!data.success) {
-                    console.error('Ошибка при загрузке данных:', data.message);
+                    console.error('Ошибка при загрузке данных:', data.message || 'Неизвестная ошибка');
                     return;
                 }
 
@@ -58,7 +62,7 @@
                     artContainer.appendChild(imgElement);
                 });
             } catch (error) {
-                console.error('Ошибка при загрузке изображений:', error);
+                console.error('Ошибка при загрузке изображений:', error.message);
             }
         }
 
