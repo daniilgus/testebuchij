@@ -68,17 +68,20 @@ nav {
 }
 
 #artContainer {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Адаптивные колонки */
-    grid-gap: 15px; /* Отступ между изображениями */
-    padding: 15px;
+    columns: 4; /* Количество колонок */
+    column-gap: 20px; /* Промежуток между колонками */
+    margin: 20px;
 }
 
 .art-item {
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 20px; /* Отступ между элементами */
     border-radius: 10px;
     transition: transform 0.3s ease;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     overflow: hidden;
+    break-inside: avoid; /* Предотвращает разрыв элементов между колонками */
 }
 
 .art-item img {
@@ -90,6 +93,25 @@ nav {
 
 .art-item:hover img {
     transform: scale(1.1); /* Эффект увеличения при наведении */
+}
+
+/* Адаптивность для разных экранов */
+@media (max-width: 1200px) {
+    #artContainer {
+        columns: 3; /* Уменьшаем количество колонок на средних экранах */
+    }
+}
+
+@media (max-width: 900px) {
+    #artContainer {
+        columns: 2; /* Две колонки на маленьких экранах */
+    }
+}
+
+@media (max-width: 600px) {
+    #artContainer {
+        columns: 1; /* Одна колонка на очень маленьких экранах */
+    }
 }
 .telegram-button:hover {
     background-color: var(--button-hover-background);
