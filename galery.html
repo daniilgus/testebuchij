@@ -5,7 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NeurochanArt</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
-    <link rel="stylesheet" href="source/style.css" />
+    <style>
+        .art-item {
+            max-width: 300px;
+            height: auto;
+            margin: 10px;
+            display: block;
+        }
+    </style>
 </head>
 <body>
     <header class="header">
@@ -19,7 +26,7 @@
     </header>
     <div class="user_container">
         <div id="artContainer">
-            <!-- Тут будут арты -->
+            <!-- Здесь будут отображаться изображения -->
         </div>
     </div>
     <footer>
@@ -29,13 +36,19 @@
         // Функция для загрузки изображений с Imgur
         async function loadImages() {
             try {
-                const albumId = '0aG3suY'; // Замените на ваш ID альбома
+                // Замените 'YOUR_CLIENT_ID' на ваш реальный Client-ID из Imgur
+                const clientID = 'ecbc89da3211231'; 
+
+                // ID альбома Imgur (из URL альбома, например, https://imgur.com/a/0aG3suY)
+                const albumId = '0aG3suY'; 
+
+                // URL API Imgur для получения данных альбома
                 const imgurApiUrl = `https://api.imgur.com/3/album/${albumId}/images`;
 
-                // Делаем запрос напрямую к API Imgur
+                // Делаем запрос к API Imgur
                 const response = await fetch(imgurApiUrl, {
                     headers: {
-                        Authorization: 'ecbc89da3211231' // Замените YOUR_CLIENT_ID на ваш Client-ID
+                        Authorization: `Client-ID ${clientID}`
                     }
                 });
 
@@ -44,6 +57,7 @@
                     return;
                 }
 
+                // Парсим ответ как JSON
                 const data = await response.json();
 
                 if (!data.success || !data.data || data.data.length === 0) {
@@ -56,9 +70,7 @@
                 data.data.forEach(image => {
                     const imgElement = document.createElement('img');
                     imgElement.src = image.link; // Прямая ссылка на изображение
-                    imgElement.classList.add('img-fluid', 'art-item');
-                    imgElement.style.margin = '10px';
-                    imgElement.style.width = '100%';
+                    imgElement.classList.add('art-item');
                     imgElement.setAttribute('loading', 'lazy'); // Ленивая загрузка
                     artContainer.appendChild(imgElement);
                 });
@@ -67,7 +79,8 @@
             }
         }
 
-window.onload = loadImages;
+        // Вызываем функцию при загрузке страницы
+        window.onload = loadImages;
     </script>
 </body>
 </html>
