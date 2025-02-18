@@ -27,36 +27,34 @@
     </footer>
 
     <script>
-        // Функция для загрузки изображений с PostImage через прокси и регулярные выражения
         async function loadImages() {
             try {
-                // URL галереи на PostImage
-                const galleryUrl = 'https://postimg.cc/gallery/Qr7K3Sc'; // Твоя ссылка
+                // Настройки для API freeimage.host
+                const albumId = 'OsHI2'; // ID твоего альбома
+                const apiKey = '6d207e02198a847aa98d0a2a901485a5'; // Твой API-ключ
+                const password = 'dimannigga'; // Пароль для приватного альбома
 
-                // Используем прокси-сервер для обхода CORS
-                const proxyUrl = 'https://api.allorigins.win/get?url=' + encodeURIComponent(galleryUrl);
+                // URL для получения информации об альбоме
+                const apiUrl = `https://api.freeimage.host/v1/albums/${albumId}?key=${apiKey}&password=${password}`;
 
-                // Получаем HTML-код страницы галереи через прокси
-                const response = await fetch(proxyUrl);
-                const { contents } = await response.json();
+                // Отправляем запрос к API
+                const response = await fetch(apiUrl);
+                const data = await response.json();
 
-                // Ищем все ссылки на изображения с помощью регулярного выражения
-                const imageRegex = /https?:\/\/i\.postimg\.cc\/[^\s"'<>]+/g;
-                const matches = contents.match(imageRegex);
-
-                if (!matches || matches.length === 0) {
-                    console.warn('Изображения не найдены.');
+                if (!data.success) {
+                    console.error('Ошибка при загрузке данных:', data.message);
                     return;
                 }
 
+                // Извлекаем ссылки на изображения
+                const images = data.data.images.map(image => image.url);
+
                 // Добавляем изображения в контейнер
                 const artContainer = document.getElementById('artContainer');
-                matches.forEach(imageSrc => {
-                    const imgElement = document.createElement('img');
-                    imgElement.src = imageSrc;
-                    imgElement.classList.add('img-fluid', 'art-item');
-                    imgElement.style.margin = '10px';
-                    imgElement.style.width = '100%';
+                images.forEach(imageSrc => {
+                    const imgElement = document.createElement('div');
+                    imgElement.classList.add('art-item');
+                    imgElement.innerHTML = `<img src="${imageSrc}" alt="Art">`;
                     artContainer.appendChild(imgElement);
                 });
             } catch (error) {
